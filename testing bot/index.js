@@ -1,5 +1,5 @@
 
-let { Blue } = require("../blue.js")
+let { Blue } = require("../index.js")
 const Discord = require("discord.js")
 const client = new Discord.Client({
   fetchAllMembers: false,
