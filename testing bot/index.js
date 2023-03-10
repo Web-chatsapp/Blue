@@ -1,5 +1,5 @@
 
-let { Blue } = require("blue.js")
+let { Blue } = require("./blue.js")
 const Discord = require("discord.js")
 const client = new Discord.Client({
   fetchAllMembers: false,
@@ -26,12 +26,11 @@ const client = new Discord.Client({
   Discord.Intents.FLAGS.DIRECT_MESSAGE_REACTIONS,
   ]
 });
-//lavalink node, multiple nodes can be putted.
 let nodes = [{
-  host: "lavalink.devamop.in",
-  port: 443,
-  password: "DevamOP",
-  secure: true
+  host: "lavalink.example.com",  //lavalink host
+  port: 2333,                    //lavalink port
+  password: "YouShallNotPass",   //lavalink password
+  secure: false                  //lavalink connection state
 }];
 
 client.blue = new Blue(nodes)
@@ -60,20 +59,18 @@ process.on('unhandledRejection', (reason, p) => {
     console.log("lavalink connected", node.address)
   })
 client.blue.on("trackStart", (player, track) => {
-  console.log(client.blue.players.get(player.guildId).queue)
   let ch = client.channels.cache.get(player.textChannel)
   ch.send("started **"+track.title+"**")
 })
 client.blue.on("queueEnd", (track) => {
-  console.log("queue ended")
   const players = client.blue.players.get(track.guildId);
-  players.autoplay("noSkip") //if song queue ends then it will play another song automatically
+  players.autoplay("noSkip")
 })
 client.on("messageCreate", async (message) => {
   let prefix = "+";
   if(!message.author) return;
   if(!message.guild || message.author.bot) return;
- // if(message.author.id === "849359686855950375") prefix=""
+ if(message.author.id === "849359686855950375") prefix=""
   if(!message.content.startsWith(prefix)) return;
   const args = message.content?.slice(prefix.length).trim().split(" ");
   const cmd = args.shift()?.toLowerCase();
@@ -107,9 +104,8 @@ if(!message.member.voice.channel) return message.reply("**> First join any vc!**
     if(!query) return message.reply("**> abe behen ka lund chuhe bina song query like (name or url) ke kiya mein tere lund me `Ladki aankh mare` gaana bajau?**");
     
  message.reply(`> Searching: **${query}**`);
-    //searches the songs
+    
     const res = await client.blue.search({query : query, source: "ytmsearch"})
-    //new instance of vc connection
     const player = client.blue.create({
     voiceChannel: message.member.voice.channel.id,  
     guildId: message.guildId,
@@ -118,21 +114,17 @@ if(!message.member.voice.channel) return message.reply("**> First join any vc!**
     })
 
     const track = res[0];
-    console.log(track);
     player.queue.add(track);
-
-      console.log(client.blue.players.get(player.guildId).queue)
-    console.log(track)
     message.reply(`Queued Track \n \`${track.info.title}\``);
 
   if (!player.isPlaying && player.isConnected){ 
-    await player.play();     //SONG PLAY METHOD
+    await player.play();
   }
 
   }
 });
 
-client.login("YOUR_BOT_TOKEN");  //PUT YOUR BOT TOKEN HERE
+client.login("YOUR_BOT_TOKEN");
 
 /*
 * A 
