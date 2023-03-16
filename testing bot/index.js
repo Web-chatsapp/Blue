@@ -126,7 +126,6 @@ if(!message.member.voice.channel) return message.reply("**> First join any vc!**
         track = res[0];
         player.queue.add(track)
       }
-    console.log(res.length, "========================");
     
     message.reply(`Queued Track \n \`${res[0].info.title}\``);
 
