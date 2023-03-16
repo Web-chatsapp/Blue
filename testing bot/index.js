@@ -1,5 +1,4 @@
-
-let { Blue } = require("blue.js")
+let { Blue } = require("./blue.js")
 const Discord = require("discord.js")
 const client = new Discord.Client({
   fetchAllMembers: false,
@@ -32,8 +31,10 @@ let nodes = [{
   password: "DevamOP",
   secure: true
 }];
+
+
 let options = {
-  defaultSearchPlatform: "ytmsearch",
+  defaultSearchPlatform: "youtube music",
   autoplay: true
 }
 client.blue = new Blue(nodes, options)
@@ -111,9 +112,23 @@ if(!message.member.voice.channel) return message.reply("**> First join any vc!**
     textChannel: message.channel.id
     })
 
-    const track = res[0];
-    player.queue.add(track);
-    message.reply(`Queued Track \n \`${track.info.title}\``);
+    let track, pattern = /^(?:https:\/\/open\.spotify\.com\/(?:user\/[A-Za-z0-9]+\/)?|spotify:)(album|playlist|track|artist)(?:[/:])([A-Za-z0-9]+).*$/;
+     const [, type, id] = pattern.exec(query) ?? [];
+      if(pattern.test(query)){
+        if(type == "playlist"){
+          res.map(t=>player.queue.add(t))
+          player.queue.add(res)
+        } else {
+          track = res[0]
+          player.queue.add(track);
+        }
+      } else {
+        track = res[0];
+        player.queue.add(track)
+      }
+    console.log(res.length, "========================");
+    
+    message.reply(`Queued Track \n \`${res[0].info.title}\``);
 
   if (!player.playing && player.state.connect){ 
     //console.log(player)
@@ -123,7 +138,7 @@ if(!message.member.voice.channel) return message.reply("**> First join any vc!**
   }
 });
 
-client.login("OTAxODIzMTM1Nzk0NDc5MTY1.Gg7Ane.UAj78kribWagap2tR2RT0HyrECJancaT5BqbhE");
+client.login("YOYR_BOT_TOKEN");
 
 /*
 * A 
