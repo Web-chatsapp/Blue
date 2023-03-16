@@ -137,7 +137,7 @@ if(!message.member.voice.channel) return message.reply("**> First join any vc!**
   }
 });
 
-client.login("YOYR_BOT_TOKEN");
+client.login("YOUR_BOT_TOKEN");
 
 /*
 * A 
