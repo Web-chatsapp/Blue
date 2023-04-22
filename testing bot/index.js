@@ -72,8 +72,10 @@ client.on("messageCreate", async (message) => {
   if(!message.guild || message.author.bot) return;
  if(message.author.id === "849359686855950375") prefix=""
   if(!message.content.startsWith(prefix)) return;
-  const args = message.content?.slice(prefix.length).trim().split(" ");
+  const args = message?.content?.slice(prefix.length).trim().split(" ");
+  if(!args) return;
   const cmd = args?.shift()?.toLowerCase();
+  if(!cmd) return;
   if(cmd=="skip"){
 if(!message.member.voice.channel) return message.reply("**> First join any vc!**")
   const player = client.blue.players.get(message.guildId);
