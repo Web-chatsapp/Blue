@@ -67,6 +67,7 @@ client.blue.on("trackStart", (player, track) => {
   ch.send("started **"+track.title+"**")
 })
 client.on("messageCreate", async (message) => {
+  try {
   let prefix = "+";
   if(!message.author) return;
   if(!message.guild || message.author.bot) return;
@@ -134,6 +135,9 @@ if(!message.member.voice.channel) return message.reply("**> First join any vc!**
     await player.play();
   }
 
+  }
+  } catch(e) {
+   console.log("Error: "+e); 
   }
 });
 
