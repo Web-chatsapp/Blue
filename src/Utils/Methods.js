@@ -1,5 +1,5 @@
 module.exports = {
-    Get: "get",
+    Get: "GET",
     Delete: "DELETE",
     Patch: "PATCH",
     Post: "POST",
