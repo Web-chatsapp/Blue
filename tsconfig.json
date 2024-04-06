@@ -1,0 +1,12 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "resolveJsonModule": true, // Enable importing CommonJS modules using import syntax
+    "target": "es2016", // Set the JavaScript language version for emitted JavaScript
+    "module": "commonjs", // Specify what module code is generated
+    "strict": true, // Enable all strict type-checking options
+    "forceConsistentCasingInFileNames": true, // Ensure that casing is correct in imports
+    "allowSyntheticDefaultImports": true, 
+    "skipLibCheck": true
+  }
+}
